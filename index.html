@@ -176,9 +176,7 @@ html[data-theme="dark"] .pill.overdue { background: #3b1a1a; } html[data-theme="
 footer { text-align: center; color: var(--muted); font-size: 11.5px; margin-top: 34px; opacity: .8; }
 footer button { background: none; border: none; color: var(--muted); text-decoration: underline; cursor: pointer; font: inherit; }
 footer .appver { text-decoration: none; opacity: .75; }
-
-.update-banner { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 95; display: none;
-  align-items: center; gap: 12px; background: var(--ink); color: var(--card); padding: 10px 10px 10px 16px; border-radius: 11px; box-shadow: 0 10px 34px rgba(0,0,0,.32); font-size: 13.5px; max-width: 92vw; }
+.update-banner { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 95; display: none; align-items: center; gap: 12px; background: var(--ink); color: var(--card); padding: 10px 10px 10px 16px; border-radius: 11px; box-shadow: 0 10px 34px rgba(0,0,0,.32); font-size: 13.5px; max-width: 92vw; }
 .update-banner.show { display: flex; }
 .update-banner button { border: none; border-radius: 7px; padding: 6px 12px; font: inherit; font-weight: 600; cursor: pointer; }
 .update-banner .reload { background: var(--accent); color: #fff; }
@@ -240,7 +238,7 @@ footer .appver { text-decoration: none; opacity: .75; }
 .pp-body { flex: 1; display: flex; min-height: 0; }
 .pp-side { width: 300px; flex: 0 0 auto; background: var(--card); border-right: 1px solid var(--line); overflow: auto; transition: width .18s; }
 .pp-side.collapsed { width: 0; overflow: hidden; }
-.pp-side-inner { padding: 14px; }
+.pp-side-inner { padding: 14px 8px; }
 .pp-side h4 { margin: 0 0 8px; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
 .pp-side .block { margin-bottom: 22px; }
 .pp-main { flex: 1; min-width: 0; display: flex; flex-direction: column; }
@@ -257,6 +255,30 @@ footer .appver { text-decoration: none; opacity: .75; }
 .toolbar input[type=color] { width: 30px; height: 30px; border: 1px solid var(--line); border-radius: 6px; background: var(--card); padding: 2px; cursor: pointer; }
 .tb-sep { width: 1px; height: 22px; background: var(--line); margin: 0 3px; }
 .tb-lbl { font-size: 11px; color: var(--muted); margin: 0 2px 0 6px; }
+.tb.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+.tb-num { width: 54px; height: 30px; border: 1px solid var(--line); border-radius: 6px; background: var(--card); color: var(--ink); padding: 0 6px; font: inherit; }
+.toolbar.collapsed { display: none; }
+.tb-collapse { margin-left: auto; }
+.fmt-show { display: none; align-self: flex-start; margin: 6px 0 0 12px; border: 1px solid var(--line); background: var(--card); color: var(--muted); border-radius: 7px; padding: 4px 10px; font: inherit; font-size: 12px; cursor: pointer; }
+.fmt-show.show { display: inline-block; }
+.inline-edit { font: inherit; border: 1px solid var(--accent); border-radius: 6px; padding: 2px 6px; min-width: 120px; background: var(--card); color: var(--ink); }
+.sub-grip { cursor: grab; color: var(--muted); font-size: 12px; opacity: 0; user-select: none; }
+.sub:hover .sub-grip, .subrow:hover .sub-grip { opacity: .55; }
+.sub.dragging, .subrow.dragging { opacity: .4; }
+.notes-wrap { flex: 1; display: flex; min-height: 0; }
+.notes-wrap .editor { flex: 1; }
+#notesEditor2 { display: none; border-left: 1px solid var(--line); }
+.notes-wrap.split #notesEditor2 { display: block; }
+.subs-head { font-size: 12px; color: var(--muted); cursor: pointer; padding: 3px 2px 5px; user-select: none; }
+.subs-head:hover { color: var(--ink); }
+.subs-toggle { display: inline-block; width: 12px; }
+.sub-prio { font-size: 11px; flex: 0 0 auto; }
+.pill.sub-due { padding: 0 6px; font-size: 10.5px; flex: 0 0 auto; }
+.subs .sub { padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+.pp-side .subrow:not(:last-child) { padding-bottom: 7px; border-bottom: 1px solid var(--line); }
+.subacts { position: absolute; right: 0; top: 50%; transform: translateY(-50%); display: flex; gap: 5px; align-items: center; padding: 2px 4px 2px 10px; background: linear-gradient(90deg, transparent, var(--card) 30%); opacity: 0; }
+.pp-side .subrow:hover .subacts { opacity: 1; }
+.pp-side .subrow .subacts .x { opacity: 1; }
 .editor { flex: 1; overflow: auto; padding: 22px 26px; outline: none; font-size: 15px; line-height: 1.6; }
 .editor:empty:before { content: attr(data-ph); color: var(--muted); opacity: .6; }
 .editor .ck { display: flex; align-items: flex-start; gap: 8px; margin: 3px 0; }
@@ -276,9 +298,10 @@ footer .appver { text-decoration: none; opacity: .75; }
 .sf .sfname:hover { text-decoration: underline; }
 .sf .sfx { cursor: pointer; color: var(--muted); font-size: 12px; opacity: 0; }
 .sf:hover .sfx { opacity: 1; }
-.pp-side .subrow { display: flex; align-items: center; gap: 7px; font-size: 13px; margin-bottom: 5px; }
+.pp-side .subrow { position: relative; display: flex; align-items: center; gap: 6px; font-size: 13px; margin-bottom: 5px; padding-right: 2px; }
 .pp-side .subrow.done span { text-decoration: line-through; color: var(--muted); }
-.pp-side .subrow span { flex: 1; }
+.pp-side .subrow > span { flex: 1; overflow-wrap: anywhere; }
+.pp-side .subrow input[type=checkbox] { margin: 0; flex: 0 0 auto; }
 .pp-side .subrow .x { opacity: 0; cursor: pointer; color: var(--muted); }
 .pp-side .subrow:hover .x { opacity: 1; }
 
@@ -404,6 +427,25 @@ footer .appver { text-decoration: none; opacity: .75; }
   </div>
 </div>
 
+<div class="modal-ov" id="subModal">
+  <div class="modal">
+    <div class="modal-head"><h2>Edit subtask</h2><button class="iconbtn" data-close>✕</button></div>
+    <div class="modal-body">
+      <div class="field"><label>Title</label><input type="text" id="subTitle"></div>
+      <div class="field"><label>Due date</label><input type="date" id="subDue"></div>
+      <div class="field"><label>Priority</label>
+        <select id="subPrio"><option value="0">None</option><option value="3">High</option><option value="2">Medium</option><option value="1">Low</option></select></div>
+      <div class="field"><label>Repeat</label>
+        <select id="subRep"><option value="none">Does not repeat</option><option value="daily">Daily</option><option value="weekly">Weekly</option><option value="monthly">Monthly</option></select>
+        <span class="rep-every" id="subEveryWrap" style="margin-left:8px">every <input type="number" min="1" value="1" id="subEvery"><span id="subUnit"></span></span></div>
+      <div class="field" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0">
+        <button class="btn danger" id="subDelete">Delete subtask</button>
+        <button class="btn primary" id="subSave">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Welcome (first run) -->
 <div class="modal-ov" id="welcomeModal">
   <div class="modal">
@@ -457,21 +499,31 @@ footer .appver { text-decoration: none; opacity: .75; }
       </div>
       <div class="pp-pane on" id="paneNotes">
         <div class="toolbar" id="notesToolbar">
-          <span class="tb-lbl">Font</span>
-          <select id="fontFamily"><option value="">Default</option><option value="Georgia, serif">Georgia</option><option value="'Times New Roman', serif">Times</option><option value="Arial, sans-serif">Arial</option><option value="'Courier New', monospace">Courier</option><option value="Verdana, sans-serif">Verdana</option></select>
-          <select id="fontSize"><option value="">Size</option><option value="13px">13</option><option value="15px">15</option><option value="18px">18</option><option value="22px">22</option><option value="28px">28</option><option value="36px">36</option></select>
+          <select id="fontFamily" title="Font"><option value="">Default</option><option value="Georgia, serif">Georgia</option><option value="'Times New Roman', serif">Times</option><option value="Arial, sans-serif">Arial</option><option value="'Courier New', monospace">Courier</option><option value="Verdana, sans-serif">Verdana</option></select>
+          <select id="fontSize" title="Preset size"><option value="">Size</option><option value="11px">11</option><option value="13px">13</option><option value="15px">15</option><option value="18px">18</option><option value="22px">22</option><option value="28px">28</option><option value="36px">36</option><option value="48px">48</option></select>
+          <input type="number" id="fontSizeNum" class="tb-num" min="6" max="200" placeholder="px" title="Exact size (px)">
           <span class="tb-sep"></span>
-          <button class="tb" data-cmd="bold"><b>B</b></button><button class="tb" data-cmd="italic"><i>I</i></button><button class="tb" data-cmd="underline"><u>U</u></button>
+          <button class="tb" data-cmd="bold" title="Bold"><b>B</b></button><button class="tb" data-cmd="italic" title="Italic"><i>I</i></button><button class="tb" data-cmd="underline" title="Underline"><u>U</u></button><button class="tb" data-cmd="strikeThrough" title="Strikethrough"><s>S</s></button>
           <span class="tb-sep"></span>
-          <button class="tb" data-block="H2">H2</button><button class="tb" data-block="H3">H3</button><button class="tb" data-block="P">¶</button>
+          <button class="tb" data-block="H2" title="Heading">H2</button><button class="tb" data-block="H3" title="Subheading">H3</button><button class="tb" data-block="P" title="Normal">¶</button>
           <span class="tb-sep"></span>
-          <button class="tb" data-cmd="insertUnorderedList">•</button><button class="tb" data-cmd="insertOrderedList">1.</button><button class="tb" id="ckBtn">☑</button>
+          <button class="tb" data-cmd="justifyLeft" title="Align left">⇤</button><button class="tb" data-cmd="justifyCenter" title="Align center">⇔</button><button class="tb" data-cmd="justifyRight" title="Align right">⇥</button><button class="tb" data-cmd="justifyFull" title="Justify">≡</button>
           <span class="tb-sep"></span>
-          <span class="tb-lbl">A</span><input type="color" id="foreColor" value="#1f2430"><span class="tb-lbl">▮</span><input type="color" id="hiliteColor" value="#fff3a0">
+          <button class="tb" data-cmd="outdent" title="Decrease indent">«</button><button class="tb" data-cmd="indent" title="Increase indent">»</button>
           <span class="tb-sep"></span>
-          <button class="tb" data-cmd="removeFormat">⌫</button>
+          <button class="tb" data-cmd="insertUnorderedList" title="Bulleted list">•</button><button class="tb" data-cmd="insertOrderedList" title="Numbered list">1.</button><button class="tb" id="ckBtn" title="Checklist">☑</button>
+          <span class="tb-sep"></span>
+          <input type="color" id="foreColor" value="#1f2430" title="Text color"><input type="color" id="hiliteColor" value="#fff3a0" title="Highlight">
+          <span class="tb-sep"></span>
+          <button class="tb" data-cmd="removeFormat" title="Clear formatting">⌫</button>
+          <button class="tb" id="twoColBtn" title="Two columns">◫</button>
+          <button class="tb tb-collapse" id="tbCollapse" title="Hide formatting bar">▴</button>
         </div>
-        <div class="editor" id="notesEditor" contenteditable="true" data-ph="Write notes, plans, or thoughts here…"></div>
+        <button class="fmt-show" id="tbShow" title="Show formatting bar">▾ Formatting</button>
+        <div class="notes-wrap" id="notesWrap">
+          <div class="editor" id="notesEditor" contenteditable="true" data-ph="Write notes, plans, or thoughts here…"></div>
+          <div class="editor" id="notesEditor2" contenteditable="true" data-ph="Right column…"></div>
+        </div>
       </div>
       <div class="pp-pane" id="paneBrain">
         <div class="brain-tools"><button class="btn" id="addSticky">+ Add note</button>
@@ -576,6 +628,7 @@ footer .appver { text-decoration: none; opacity: .75; }
     s.theme = Object.assign({}, DEFAULT_THEME, s.theme || {});
     if(!Array.isArray(s.templates)) s.templates = [];
     if(typeof s.autoArchive !== "boolean") s.autoArchive = false;
+    if(typeof s.notesToolbarCollapsed !== "boolean") s.notesToolbarCollapsed = false;
     return s;
   }
 
@@ -781,12 +834,13 @@ footer .appver { text-decoration: none; opacity: .75; }
     if(t.project){ body.appendChild(renderProgress(t)); body.appendChild(renderSubs(t)); body.appendChild(renderFilesCard(t)); }
 
     var acts=document.createElement("div"); acts.className="acts";
+    var pen=document.createElement("button"); pen.className="iconbtn"; pen.textContent="✎"; pen.title="Rename"; pen.onclick=function(){ inlineEdit(titleEl, t.title, function(v){ t.title=v; saveTasks(); }, render); };
     var edit=document.createElement("button"); edit.className="iconbtn"; edit.textContent="Edit"; edit.onclick=function(){ startEdit(el,t); };
     var arch=document.createElement("button"); arch.className="iconbtn"; arch.textContent="🗄"; arch.title="Archive"; arch.onclick=function(){ t.archived=true; saveTasks(); render(); };
     var del=document.createElement("button"); del.className="iconbtn"; del.textContent="✕"; del.title="Delete";
     del.onclick=function(){ if(t.project&&!confirm("Delete this project and its subtasks/files/notes?")) return;
       tasks=tasks.filter(function(x){return x.id!==t.id;}); saveTasks(); render(); };
-    acts.appendChild(edit); acts.appendChild(arch); acts.appendChild(del);
+    acts.appendChild(pen); acts.appendChild(edit); acts.appendChild(arch); acts.appendChild(del);
 
     el.appendChild(cb); el.appendChild(body); el.appendChild(acts);
     return el;
@@ -794,12 +848,79 @@ footer .appver { text-decoration: none; opacity: .75; }
   function renderProgress(t){ var wrap=document.createElement("div"); var total=t.subtasks.length; if(!total) return wrap;
     var done=t.subtasks.filter(function(s){return s.done;}).length; var pct=Math.round(done/total*100);
     wrap.className="prog"; wrap.innerHTML='<div class="bar"><span style="width:'+pct+'%"></span></div><div class="lbl">'+done+'/'+total+'</div>'; return wrap; }
+  var dragSubId=null;
+  function inlineEdit(el, current, apply, rerender){
+    var input=document.createElement("input"); input.type="text"; input.value=current; input.className="inline-edit";
+    el.replaceWith(input); input.focus(); input.select(); var done=false;
+    function fin(save){ if(done) return; done=true; if(save){ var v=input.value.trim(); if(v) apply(v); } rerender(); }
+    input.addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); fin(true); } else if(e.key==="Escape"){ fin(false); } });
+    input.addEventListener("blur",function(){ fin(true); });
+  }
+  function reorderById(arr, dragId, beforeId){
+    var from=-1,i; for(i=0;i<arr.length;i++){ if(arr[i].id===dragId){ from=i; break; } } if(from<0) return;
+    var item=arr.splice(from,1)[0]; var to=arr.length;
+    if(beforeId){ for(i=0;i<arr.length;i++){ if(arr[i].id===beforeId){ to=i; break; } } }
+    arr.splice(to,0,item);
+  }
+  function wireSubDnD(row, st, t, rerender){
+    row.setAttribute("draggable","true");
+    row.addEventListener("dragstart",function(e){ dragSubId=st.id; e.stopPropagation(); e.dataTransfer.effectAllowed="move"; row.classList.add("dragging"); });
+    row.addEventListener("dragend",function(){ dragSubId=null; row.classList.remove("dragging"); });
+    row.addEventListener("dragover",function(e){ if(!dragSubId) return; e.preventDefault(); e.stopPropagation(); });
+    row.addEventListener("drop",function(e){ if(!dragSubId){ return; } e.preventDefault(); e.stopPropagation();
+      if(dragSubId!==st.id){ var r=row.getBoundingClientRect(); var idx=-1,i; for(i=0;i<t.subtasks.length;i++){ if(t.subtasks[i].id===st.id){ idx=i; break; } }
+        var beforeId=(e.clientY < r.top+r.height/2) ? st.id : (t.subtasks[idx+1]?t.subtasks[idx+1].id:null);
+        reorderById(t.subtasks, dragSubId, beforeId); saveTasks(); } dragSubId=null; rerender(); });
+  }
+  function subGrip(){ var g=document.createElement("span"); g.className="sub-grip"; g.textContent="⠿"; g.title="Drag to reorder"; return g; }
+  var subEditCtx=null;
+  function completeSubtask(t, st, checked){
+    if(checked && hasRepeat(st)){ st.due=nextDueDate(st.due, st.repeat); st.done=false; }
+    else st.done=checked;
+    saveTasks();
+  }
+  function subPrioFlag(st){ if(!st.priority) return null; var pf=document.createElement("span"); pf.className="sub-prio";
+    pf.style.color=PRIOS[st.priority].color; pf.textContent=PRIOS[st.priority].flag; pf.title=PRIOS[st.priority].lbl+" priority"; return pf; }
+  function subDuePill(st){ if(!st.due && !hasRepeat(st)) return null; var d=document.createElement("span");
+    d.className="pill sub-due "+dueClass(st.due, st.done); d.textContent=(hasRepeat(st)?"🔁":"")+(st.due?(hasRepeat(st)?" ":"")+fmtDue(st.due):""); return d; }
+  function openSubEditor(t, st, rerender){
+    subEditCtx={t:t, st:st, rerender:rerender};
+    document.getElementById("subTitle").value=st.title||"";
+    document.getElementById("subDue").value=st.due||"";
+    document.getElementById("subPrio").value=String(st.priority||0);
+    document.getElementById("subRep").value=(st.repeat&&st.repeat.type)?st.repeat.type:"none";
+    document.getElementById("subEvery").value=(st.repeat&&st.repeat.every)?st.repeat.every:1;
+    syncSubRep(); openModal("subModal"); document.getElementById("subTitle").focus();
+  }
+  function syncSubRep(){ var v=document.getElementById("subRep").value; document.getElementById("subEveryWrap").classList.toggle("on",v!=="none");
+    document.getElementById("subUnit").textContent=v==="daily"?"day(s)":v==="weekly"?"week(s)":v==="monthly"?"month(s)":""; }
+  document.getElementById("subRep").addEventListener("change",syncSubRep);
+  document.getElementById("subTitle").addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); document.getElementById("subSave").click(); } });
+  document.getElementById("subSave").onclick=function(){ if(!subEditCtx) return; var st=subEditCtx.st;
+    var title=document.getElementById("subTitle").value.trim(); if(title) st.title=title;
+    st.due=document.getElementById("subDue").value||"";
+    st.priority=parseInt(document.getElementById("subPrio").value,10)||0;
+    var type=document.getElementById("subRep").value;
+    if(type==="none") delete st.repeat; else { st.repeat={type:type,every:Math.max(1,parseInt(document.getElementById("subEvery").value,10)||1)}; if(!st.due) st.due=todayStr(); }
+    saveTasks(); closeModal("subModal"); if(subEditCtx.rerender) subEditCtx.rerender(); };
+  document.getElementById("subDelete").onclick=function(){ if(!subEditCtx) return; var t=subEditCtx.t, st=subEditCtx.st;
+    t.subtasks=t.subtasks.filter(function(u){return u.id!==st.id;}); saveTasks(); closeModal("subModal"); if(subEditCtx.rerender) subEditCtx.rerender(); };
   function renderSubs(t){ var wrap=document.createElement("div"); wrap.className="subs";
+    var total=t.subtasks.length;
+    if(total){ var head=document.createElement("div"); head.className="subs-head";
+      var done=t.subtasks.filter(function(s){return s.done;}).length;
+      head.innerHTML='<span class="subs-toggle">'+(t.subsCollapsed?"▸":"▾")+'</span> Subtasks '+done+'/'+total;
+      head.onclick=function(){ t.subsCollapsed=!t.subsCollapsed; saveTasks(); render(); };
+      wrap.appendChild(head); }
+    if(t.subsCollapsed) return wrap;
     t.subtasks.forEach(function(st){ var row=document.createElement("div"); row.className="sub"+(st.done?" done":"");
-      var cb=document.createElement("input"); cb.type="checkbox"; cb.className="cb"; cb.checked=!!st.done; cb.onchange=function(){ st.done=cb.checked; saveTasks(); render(); };
-      var span=document.createElement("span"); span.className="st"; span.textContent=st.title;
+      var cb=document.createElement("input"); cb.type="checkbox"; cb.className="cb"; cb.checked=!!st.done; cb.onchange=function(){ completeSubtask(t,st,cb.checked); render(); };
+      var pf=subPrioFlag(st);
+      var span=document.createElement("span"); span.className="st"; span.textContent=st.title; span.title="Edit subtask"; span.style.cursor="pointer"; span.onclick=function(){ openSubEditor(t, st, render); };
+      var due=subDuePill(st);
+      var pen=document.createElement("button"); pen.className="iconbtn x"; pen.textContent="✎"; pen.title="Edit subtask"; pen.onclick=function(){ openSubEditor(t, st, render); };
       var x=document.createElement("button"); x.className="iconbtn x"; x.textContent="✕"; x.onclick=function(){ t.subtasks=t.subtasks.filter(function(u){return u.id!==st.id;}); saveTasks(); render(); };
-      row.appendChild(cb); row.appendChild(span); row.appendChild(x); wrap.appendChild(row); });
+      row.appendChild(subGrip()); row.appendChild(cb); if(pf) row.appendChild(pf); row.appendChild(span); if(due) row.appendChild(due); row.appendChild(pen); row.appendChild(x); wireSubDnD(row, st, t, render); wrap.appendChild(row); });
     var add=document.createElement("div"); add.className="subadd"; var inp=document.createElement("input"); inp.type="text"; inp.placeholder="+ Add subtask, press Enter";
     inp.addEventListener("keydown",function(e){ if(e.key==="Enter"){ var v=inp.value.trim(); if(!v) return; t.subtasks.push({id:uid(),title:v,done:false}); saveTasks(); render(); } });
     add.appendChild(inp); wrap.appendChild(add); return wrap; }
@@ -1113,12 +1234,23 @@ footer .appver { text-decoration: none; opacity: .75; }
     r.readAsDataURL(file); }); }
   function addLink(t,done){ var url=prompt("Paste the link URL:"); if(!url) return; if(!/^https?:\/\//i.test(url)) url="https://"+url;
     var label=prompt("Label for this link:",url)||url; t.files.push({id:uid(),kind:"link",name:label,url:url}); saveTasks(); done&&done(); }
+  function dataURLtoObjectURL(dataURL){
+    try { var parts=dataURL.split(","), meta=parts[0], isB64=/;base64/i.test(meta),
+      mime=(meta.match(/data:([^;]+)/)||[])[1]||"application/octet-stream",
+      bin=isB64?atob(parts[1]):decodeURIComponent(parts[1]), len=bin.length, arr=new Uint8Array(len);
+      for(var i=0;i<len;i++) arr[i]=bin.charCodeAt(i);
+      return URL.createObjectURL(new Blob([arr],{type:mime}));
+    } catch(e){ return dataURL; }
+  }
   function openViewer(f){ var k=fileKind(f); document.getElementById("vName").textContent=f.name;
-    var body=document.getElementById("vBody"); body.innerHTML=""; var href=f.kind==="link"?f.url:f.data;
+    var body=document.getElementById("vBody"); body.innerHTML="";
+    if(openViewer._blob){ try{ URL.revokeObjectURL(openViewer._blob); }catch(e){} openViewer._blob=null; }
+    var src = (k==="image"||k==="pdf") ? (openViewer._blob=dataURLtoObjectURL(f.data)) : f.data;
+    var href = f.kind==="link" ? f.url : (openViewer._blob || f.data);
     document.getElementById("vOpen").onclick=function(){ var a=document.createElement("a"); a.href=href; a.target="_blank"; a.rel="noopener";
       if(k==="other") a.download=f.name; a.click(); };
-    if(k==="image"){ var img=document.createElement("img"); img.src=f.data; body.appendChild(img); }
-    else if(k==="pdf"){ var fr=document.createElement("iframe"); fr.src=f.data; body.appendChild(fr); }
+    if(k==="image"){ var img=document.createElement("img"); img.src=src; body.appendChild(img); }
+    else if(k==="pdf"){ var fr=document.createElement("iframe"); fr.src=src; body.appendChild(fr); }
     else if(k==="text"){ var pre=document.createElement("pre"); pre.textContent=f.text!=null?f.text:"(Preview unavailable — use ↗ to open.)"; body.appendChild(pre); }
     else if(k==="link"){ body.innerHTML='<div class="viewer-link">External link:<br><br><a href="'+esc(f.url)+'" target="_blank" rel="noopener">'+esc(f.url)+'</a></div>'; }
     else body.innerHTML='<div class="viewer-link">No inline preview. Use ↗ to open or download.</div>';
@@ -1129,13 +1261,17 @@ footer .appver { text-decoration: none; opacity: .75; }
     vEl.className=""; vEl.classList.add("size-"+b.dataset.s); Array.prototype.forEach.call(this.children,function(c){ c.classList.toggle("on",c===b); }); });
 
   /* ===== project page ===== */
-  var pp=document.getElementById("projectPage"), notesEditor=document.getElementById("notesEditor"), brainCanvas=document.getElementById("brainCanvas");
+  var pp=document.getElementById("projectPage"), notesEditor=document.getElementById("notesEditor"), notesEditor2=document.getElementById("notesEditor2"), notesWrap=document.getElementById("notesWrap"), activeEditor=notesEditor, brainCanvas=document.getElementById("brainCanvas");
   function openProject(id){ currentPid=id; var t=getTask(id); if(!t) return; ensureProject(t);
     document.getElementById("ppTitle").value=t.title; document.getElementById("ppDue").value=t.due||"";
     document.getElementById("ppDone").checked=!!t.done;
     document.getElementById("ppRep").value=(t.repeat&&t.repeat.type)?t.repeat.type:"none";
     document.getElementById("ppEvery").value=(t.repeat&&t.repeat.every)?t.repeat.every:1; syncPPRep();
-    notesEditor.innerHTML=t.notesHtml||""; renderPPSubs(t); renderPPFiles(t); renderProgressPP(t); renderBrain(t);
+    notesEditor.innerHTML=t.notesHtml||""; notesEditor2.innerHTML=t.notesHtml2||""; activeEditor=notesEditor; renderPPSubs(t); renderPPFiles(t); renderProgressPP(t); renderBrain(t);
+    notesWrap.classList.toggle("split", !!t.notesTwoCol);
+    document.getElementById("twoColBtn").classList.toggle("on", !!t.notesTwoCol);
+    document.getElementById("notesToolbar").classList.toggle("collapsed", !!settings.notesToolbarCollapsed);
+    document.getElementById("tbShow").classList.toggle("show", !!settings.notesToolbarCollapsed);
     setPane("notes"); pp.classList.add("open"); }
   function closeProject(){ pp.classList.remove("open"); currentPid=null; render(); }
   document.getElementById("ppBack").onclick=closeProject;
@@ -1158,11 +1294,18 @@ footer .appver { text-decoration: none; opacity: .75; }
     var done=t.subtasks.filter(function(s){return s.done;}).length; var pct=Math.round(done/total*100);
     el.innerHTML='<div class="prog" style="width:100%"><div class="bar"><span style="width:'+pct+'%"></span></div><div class="lbl">'+done+'/'+total+'</div></div>'; }
   function renderPPSubs(t){ var box=document.getElementById("ppSubs"); box.innerHTML="";
+    var rr=function(){ renderPPSubs(t); renderProgressPP(t); };
     t.subtasks.forEach(function(st){ var row=document.createElement("div"); row.className="subrow"+(st.done?" done":"");
-      var cb=document.createElement("input"); cb.type="checkbox"; cb.checked=!!st.done; cb.onchange=function(){ st.done=cb.checked; saveTasks(); renderPPSubs(t); renderProgressPP(t); };
-      var span=document.createElement("span"); span.textContent=st.title;
-      var x=document.createElement("span"); x.className="x"; x.textContent="✕"; x.onclick=function(){ t.subtasks=t.subtasks.filter(function(u){return u.id!==st.id;}); saveTasks(); renderPPSubs(t); renderProgressPP(t); };
-      row.appendChild(cb); row.appendChild(span); row.appendChild(x); box.appendChild(row); }); }
+      var cb=document.createElement("input"); cb.type="checkbox"; cb.checked=!!st.done; cb.onchange=function(){ completeSubtask(t,st,cb.checked); rr(); };
+      var pf=subPrioFlag(st);
+      var span=document.createElement("span"); span.textContent=st.title; span.title="Edit subtask"; span.style.cursor="pointer"; span.onclick=function(){ openSubEditor(t, st, rr); };
+      var due=subDuePill(st);
+      var acts=document.createElement("span"); acts.className="subacts";
+      var grip=subGrip(); grip.style.opacity="1";
+      var pen=document.createElement("span"); pen.className="x"; pen.textContent="✎"; pen.title="Edit"; pen.style.cursor="pointer"; pen.onclick=function(){ openSubEditor(t, st, rr); };
+      var x=document.createElement("span"); x.className="x"; x.textContent="✕"; x.onclick=function(){ t.subtasks=t.subtasks.filter(function(u){return u.id!==st.id;}); saveTasks(); rr(); };
+      acts.appendChild(grip); acts.appendChild(pen); acts.appendChild(x);
+      row.appendChild(cb); if(pf) row.appendChild(pf); row.appendChild(span); if(due) row.appendChild(due); row.appendChild(acts); wireSubDnD(row, st, t, rr); box.appendChild(row); }); }
   document.getElementById("ppSubInput").addEventListener("keydown",function(e){ if(e.key!=="Enter") return; var t=getTask(currentPid); if(!t) return;
     var v=this.value.trim(); if(!v) return; t.subtasks.push({id:uid(),title:v,done:false}); this.value=""; saveTasks(); renderPPSubs(t); renderProgressPP(t); });
   function renderPPFiles(t){ var box=document.getElementById("ppFiles"); box.innerHTML="";
@@ -1179,19 +1322,26 @@ footer .appver { text-decoration: none; opacity: .75; }
     document.getElementById("paneNotes").classList.toggle("on",w==="notes"); document.getElementById("paneBrain").classList.toggle("on",w==="brain"); }
   document.querySelectorAll(".pp-tab").forEach(function(b){ b.onclick=function(){ setPane(b.dataset.pane); }; });
 
-  function saveNotes(){ var t=getTask(currentPid); if(t){ t.notesHtml=notesEditor.innerHTML; saveTasks(); } }
-  function execCmd(cmd,val){ notesEditor.focus(); document.execCommand(cmd,false,val||null); saveNotes(); }
-  notesEditor.addEventListener("input",saveNotes);
-  notesEditor.addEventListener("change",function(e){ if(e.target&&e.target.matches&&e.target.matches('input[type=checkbox]')){ var row=e.target.closest(".ck");
-    if(e.target.checked){ e.target.setAttribute("checked","checked"); if(row) row.classList.add("done"); } else { e.target.removeAttribute("checked"); if(row) row.classList.remove("done"); } saveNotes(); } });
+  function saveNotes(){ var t=getTask(currentPid); if(t){ t.notesHtml=notesEditor.innerHTML; t.notesHtml2=notesEditor2.innerHTML; saveTasks(); } }
+  function execCmd(cmd,val){ activeEditor.focus(); document.execCommand(cmd,false,val||null); saveNotes(); }
+  function notesChangeHandler(e){ if(e.target&&e.target.matches&&e.target.matches('input[type=checkbox]')){ var row=e.target.closest(".ck");
+    if(e.target.checked){ e.target.setAttribute("checked","checked"); if(row) row.classList.add("done"); } else { e.target.removeAttribute("checked"); if(row) row.classList.remove("done"); } saveNotes(); } }
+  [notesEditor, notesEditor2].forEach(function(ed){ ed.addEventListener("input",saveNotes); ed.addEventListener("focus",function(){ activeEditor=ed; }); ed.addEventListener("change",notesChangeHandler); });
   document.getElementById("notesToolbar").addEventListener("click",function(e){ var b=e.target.closest("button"); if(!b) return;
     if(b.dataset.cmd) execCmd(b.dataset.cmd); else if(b.dataset.block) execCmd("formatBlock",b.dataset.block);
-    else if(b.id==="ckBtn"){ notesEditor.focus(); document.execCommand("insertHTML",false,'<div class="ck"><input type="checkbox"><span class="cktxt">To do</span></div>'); saveNotes(); } });
+    else if(b.id==="ckBtn"){ activeEditor.focus(); document.execCommand("insertHTML",false,'<div class="ck"><input type="checkbox"><span class="cktxt">To do</span></div>'); saveNotes(); } });
+  function applyFontSize(px){ activeEditor.focus(); document.execCommand("fontSize",false,"7");
+    activeEditor.querySelectorAll('font[size="7"]').forEach(function(f){ f.removeAttribute("size"); f.style.fontSize=px; }); saveNotes(); }
   document.getElementById("fontFamily").onchange=function(){ if(this.value) execCmd("fontName",this.value); this.selectedIndex=0; };
-  document.getElementById("fontSize").onchange=function(){ var px=this.value; this.selectedIndex=0; if(!px) return; notesEditor.focus(); document.execCommand("fontSize",false,"7");
-    notesEditor.querySelectorAll('font[size="7"]').forEach(function(f){ f.removeAttribute("size"); f.style.fontSize=px; }); saveNotes(); };
+  document.getElementById("fontSize").onchange=function(){ var px=this.value; this.selectedIndex=0; if(px) applyFontSize(px); };
+  document.getElementById("fontSizeNum").addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); var n=parseInt(this.value,10); if(n) applyFontSize(n+"px"); } });
+  document.getElementById("fontSizeNum").addEventListener("change",function(){ var n=parseInt(this.value,10); if(n) applyFontSize(n+"px"); });
   document.getElementById("foreColor").oninput=function(){ execCmd("foreColor",this.value); };
   document.getElementById("hiliteColor").oninput=function(){ execCmd("hiliteColor",this.value); };
+  document.getElementById("twoColBtn").onclick=function(){ var t=getTask(currentPid); if(!t) return; t.notesTwoCol=!t.notesTwoCol; notesWrap.classList.toggle("split",t.notesTwoCol); this.classList.toggle("on",t.notesTwoCol); saveTasks(); };
+  function setToolbarCollapsed(c){ document.getElementById("notesToolbar").classList.toggle("collapsed",c); document.getElementById("tbShow").classList.toggle("show",c); settings.notesToolbarCollapsed=c; saveSettings(); }
+  document.getElementById("tbCollapse").onclick=function(){ setToolbarCollapsed(true); };
+  document.getElementById("tbShow").onclick=function(){ setToolbarCollapsed(false); };
 
   function renderBrain(t){ brainCanvas.innerHTML=""; t.brainstorm.forEach(function(n){ brainCanvas.appendChild(makeSticky(t,n)); }); }
   function makeSticky(t,n){ var el=document.createElement("div"); el.className="sticky"; el.style.left=(n.x||20)+"px"; el.style.top=(n.y||20)+"px"; el.style.background=n.color||brainColor;
@@ -1230,20 +1380,18 @@ footer .appver { text-decoration: none; opacity: .75; }
       tasks=normalizeTasks(tasks); settings=normalizeSettings(settings); saveTasks(); saveSettings(); render();
     } catch(err){ alert("Could not read that backup file."); } }; r.readAsText(file); };
 
-  /* ===== first-run welcome ===== */
+  var APP_VERSION = "v3";  // shown in the footer; bump alongside sw.js on each update
+  var av = document.getElementById("appVersion"); if (av) av.textContent = APP_VERSION;
+
   document.getElementById("welcomeGo").onclick=function(){ try{ localStorage.setItem(WKEY,"1"); }catch(e){} closeModal("welcomeModal"); };
   var seen=false; try{ seen=!!localStorage.getItem(WKEY); }catch(e){}
   if(!seen) openModal("welcomeModal");
 
-  /* ===== install prompt (PWA) ===== */
   var deferredPrompt=null; var installBtn=document.getElementById("installBtn");
   window.addEventListener("beforeinstallprompt",function(e){ e.preventDefault(); deferredPrompt=e; if(installBtn) installBtn.style.display=""; });
   if(installBtn) installBtn.onclick=function(){ if(!deferredPrompt) return; deferredPrompt.prompt();
     deferredPrompt.userChoice.then(function(){ deferredPrompt=null; installBtn.style.display="none"; }); };
   window.addEventListener("appinstalled",function(){ if(installBtn) installBtn.style.display="none"; });
-
-  var APP_VERSION = "v2";  // shown in the footer; bump alongside sw.js on each update
-  var av = document.getElementById("appVersion"); if (av) av.textContent = APP_VERSION;
 
   applyTheme();
   render();
@@ -1253,7 +1401,6 @@ footer .appver { text-decoration: none; opacity: .75; }
    has been downloaded. Enables offline use once hosted over http/https. */
 (function () {
   if (!("serviceWorker" in navigator) || location.protocol.indexOf("http") !== 0) return;
-
   function showUpdateBanner(reg) {
     var b = document.getElementById("updateBanner"); if (!b) return;
     b.classList.add("show");
@@ -1263,12 +1410,10 @@ footer .appver { text-decoration: none; opacity: .75; }
     };
     document.getElementById("updateLater").onclick = function () { b.classList.remove("show"); };
   }
-
   var refreshing = false;
   navigator.serviceWorker.addEventListener("controllerchange", function () {
     if (refreshing) return; refreshing = true; location.reload();
   });
-
   window.addEventListener("load", function () {
     navigator.serviceWorker.register("sw.js").then(function (reg) {
       if (reg.waiting && navigator.serviceWorker.controller) showUpdateBanner(reg);
