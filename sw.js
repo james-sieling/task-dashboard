@@ -1,6 +1,6 @@
 /* Service worker: makes the dashboard work fully offline once visited.
    Bump CACHE (e.g. -v2) whenever you change index.html so users get the update. */
-const CACHE = "task-dashboard-v2";
+const CACHE = "task-dashboard-v3";
 const ASSETS = [
   "./",
   "./index.html",
