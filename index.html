@@ -1326,16 +1326,53 @@ footer .appver { text-decoration: none; opacity: .75; }
   function execCmd(cmd,val){ activeEditor.focus(); document.execCommand(cmd,false,val||null); saveNotes(); }
   function notesChangeHandler(e){ if(e.target&&e.target.matches&&e.target.matches('input[type=checkbox]')){ var row=e.target.closest(".ck");
     if(e.target.checked){ e.target.setAttribute("checked","checked"); if(row) row.classList.add("done"); } else { e.target.removeAttribute("checked"); if(row) row.classList.remove("done"); } saveNotes(); } }
-  [notesEditor, notesEditor2].forEach(function(ed){ ed.addEventListener("input",saveNotes); ed.addEventListener("focus",function(){ activeEditor=ed; }); ed.addEventListener("change",notesChangeHandler); });
+  [notesEditor, notesEditor2].forEach(function(ed){ ed.addEventListener("input",saveNotes); ed.addEventListener("focus",function(){ activeEditor=ed; }); ed.addEventListener("change",notesChangeHandler);
+    ed.addEventListener("keydown",function(e){ if(e.key==="Tab"){ e.preventDefault(); document.execCommand(e.shiftKey?"outdent":"indent"); saveNotes(); } }); });
+  var savedRange=null;
+  function inEditor(node){ return node && (notesEditor.contains(node)||notesEditor2.contains(node)); }
+  function topBlock(node, root){ if(!node||node===root) return null; var el=node; while(el.parentNode && el.parentNode!==root) el=el.parentNode; return (el.parentNode===root)?el:null; }
+  function saveSel(){ if(document.activeElement!==notesEditor && document.activeElement!==notesEditor2) return; var s=window.getSelection(); if(s&&s.rangeCount){ var r=s.getRangeAt(0); if(inEditor(r.commonAncestorContainer)) savedRange=r.cloneRange(); } }
+  function currentSizePx(){ var r=savedRange||(window.getSelection().rangeCount?window.getSelection().getRangeAt(0):null); if(!r) return null;
+    var node=r.startContainer; if(node.nodeType===3) node=node.parentElement; if(!inEditor(node)) return null;
+    return Math.round(parseFloat(getComputedStyle(node).fontSize))||null; }
+  function updateSizeDisplay(){ var box=document.getElementById("fontSizeNum"); if(document.activeElement===box) return; var px=currentSizePx(); box.value=px?px:""; }
+  document.addEventListener("selectionchange",function(){ var s=window.getSelection(); if(!s||!s.rangeCount) return; var node=s.getRangeAt(0).commonAncestorContainer;
+    if(inEditor(node)){ activeEditor = notesEditor.contains(node)?notesEditor:notesEditor2; saveSel(); updateSizeDisplay(); } });
   document.getElementById("notesToolbar").addEventListener("click",function(e){ var b=e.target.closest("button"); if(!b) return;
     if(b.dataset.cmd) execCmd(b.dataset.cmd); else if(b.dataset.block) execCmd("formatBlock",b.dataset.block);
     else if(b.id==="ckBtn"){ activeEditor.focus(); document.execCommand("insertHTML",false,'<div class="ck"><input type="checkbox"><span class="cktxt">To do</span></div>'); saveNotes(); } });
-  function applyFontSize(px){ activeEditor.focus(); document.execCommand("fontSize",false,"7");
-    activeEditor.querySelectorAll('font[size="7"]').forEach(function(f){ f.removeAttribute("size"); f.style.fontSize=px; }); saveNotes(); }
+  // Font size applies at the paragraph/line (block) level so the proportional
+  // line-height (1.6) scales with it — smaller text reads tighter, larger text looser.
+  function applyFontSize(px){
+    var range = savedRange ? savedRange.cloneRange() : (window.getSelection().rangeCount ? window.getSelection().getRangeAt(0).cloneRange() : null);
+    if(!range || !inEditor(range.commonAncestorContainer)) return;
+    var root = notesEditor.contains(range.commonAncestorContainer) ? notesEditor
+             : (notesEditor2.contains(range.commonAncestorContainer) ? notesEditor2 : activeEditor);
+    var blocks=[];
+    Array.prototype.forEach.call(root.childNodes, function(ch){
+      if(ch.nodeType===3 && !ch.textContent.trim()) return;
+      try{ if(range.intersectsNode(ch)) blocks.push(ch); }catch(e){}
+    });
+    if(!blocks.length){ var b0=topBlock(range.startContainer, root); if(b0) blocks=[b0]; }
+    if(!blocks.length){ saveNotes(); return; }
+    blocks.forEach(function(node){
+      var el=node;
+      if(node!==root && node.nodeType!==1){ var d=document.createElement("div"); root.insertBefore(d,node); d.appendChild(node); el=d; }
+      if(el.style){ el.style.fontSize=px; }
+      if(el.querySelectorAll){
+        el.querySelectorAll('[style]').forEach(function(x){ if(x.style) x.style.fontSize=""; });
+        el.querySelectorAll('font[size]').forEach(function(f){ f.removeAttribute("size"); });
+      }
+    });
+    savedRange = range.cloneRange();
+    if(document.activeElement===notesEditor||document.activeElement===notesEditor2){ var s=window.getSelection(); s.removeAllRanges(); s.addRange(range); }
+    saveNotes();
+  }
   document.getElementById("fontFamily").onchange=function(){ if(this.value) execCmd("fontName",this.value); this.selectedIndex=0; };
   document.getElementById("fontSize").onchange=function(){ var px=this.value; this.selectedIndex=0; if(px) applyFontSize(px); };
+  var _sizeTimer=null;
+  document.getElementById("fontSizeNum").addEventListener("input",function(){ var v=this.value; clearTimeout(_sizeTimer); _sizeTimer=setTimeout(function(){ var n=parseInt(v,10); if(n>=6) applyFontSize(n+"px"); },140); });
   document.getElementById("fontSizeNum").addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); var n=parseInt(this.value,10); if(n) applyFontSize(n+"px"); } });
-  document.getElementById("fontSizeNum").addEventListener("change",function(){ var n=parseInt(this.value,10); if(n) applyFontSize(n+"px"); });
   document.getElementById("foreColor").oninput=function(){ execCmd("foreColor",this.value); };
   document.getElementById("hiliteColor").oninput=function(){ execCmd("hiliteColor",this.value); };
   document.getElementById("twoColBtn").onclick=function(){ var t=getTask(currentPid); if(!t) return; t.notesTwoCol=!t.notesTwoCol; notesWrap.classList.toggle("split",t.notesTwoCol); this.classList.toggle("on",t.notesTwoCol); saveTasks(); };
@@ -1380,7 +1417,7 @@ footer .appver { text-decoration: none; opacity: .75; }
       tasks=normalizeTasks(tasks); settings=normalizeSettings(settings); saveTasks(); saveSettings(); render();
     } catch(err){ alert("Could not read that backup file."); } }; r.readAsText(file); };
 
-  var APP_VERSION = "v3";  // shown in the footer; bump alongside sw.js on each update
+  var APP_VERSION = "v4";  // shown in the footer; bump alongside sw.js on each update
   var av = document.getElementById("appVersion"); if (av) av.textContent = APP_VERSION;
 
   document.getElementById("welcomeGo").onclick=function(){ try{ localStorage.setItem(WKEY,"1"); }catch(e){} closeModal("welcomeModal"); };
