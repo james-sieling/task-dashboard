@@ -175,12 +175,6 @@ html[data-theme="dark"] .pill.overdue { background: #3b1a1a; } html[data-theme="
 
 footer { text-align: center; color: var(--muted); font-size: 11.5px; margin-top: 34px; opacity: .8; }
 footer button { background: none; border: none; color: var(--muted); text-decoration: underline; cursor: pointer; font: inherit; }
-footer .appver { text-decoration: none; opacity: .75; }
-.update-banner { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 95; display: none; align-items: center; gap: 12px; background: var(--ink); color: var(--card); padding: 10px 10px 10px 16px; border-radius: 11px; box-shadow: 0 10px 34px rgba(0,0,0,.32); font-size: 13.5px; max-width: 92vw; }
-.update-banner.show { display: flex; }
-.update-banner button { border: none; border-radius: 7px; padding: 6px 12px; font: inherit; font-weight: 600; cursor: pointer; }
-.update-banner .reload { background: var(--accent); color: #fff; }
-.update-banner .later { background: transparent; color: var(--card); text-decoration: underline; font-weight: 400; }
 
 /* modal */
 .modal-ov { position: fixed; inset: 0; background: rgba(15,20,30,.45); display: none; z-index: 70; align-items: flex-start; justify-content: center; padding: 40px 16px; overflow: auto; }
@@ -287,12 +281,30 @@ footer .appver { text-decoration: none; opacity: .75; }
 .editor h2 { font-size: 20px; margin: .6em 0 .3em; } .editor h3 { font-size: 17px; margin: .6em 0 .3em; }
 .brain-tools { padding: 8px 12px; border-bottom: 1px solid var(--line); background: var(--soft); display: flex; gap: 8px; align-items: center; }
 .brain-canvas { flex: 1; position: relative; overflow: auto; background: radial-gradient(circle, var(--line) 1px, transparent 1px); background-size: 22px 22px; }
-.sticky { position: absolute; width: 190px; min-height: 90px; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,.2); display: flex; flex-direction: column; color: #1f2430; }
-.sticky .shead { height: 20px; cursor: grab; border-radius: 8px 8px 0 0; display: flex; align-items: center; justify-content: flex-end; padding: 0 5px; background: rgba(0,0,0,.06); }
-.sticky .shead .sx { cursor: pointer; font-size: 12px; color: rgba(0,0,0,.45); }
-.sticky .stext { flex: 1; padding: 6px 9px 10px; outline: none; font-size: 13px; line-height: 1.4; overflow-wrap: break-word; }
-.sticky .stext:empty:before { content: "Type an idea…"; color: rgba(0,0,0,.35); }
+.sticky { position: absolute; box-sizing: border-box; border-radius: 9px; box-shadow: var(--shadow); display: flex; flex-direction: column; overflow: hidden; }
+.sticky.dim { opacity: .25; }
+.sticky .shead { height: 28px; flex: 0 0 auto; display: flex; align-items: center; gap: 5px; padding: 0 6px; border-radius: 8px 8px 0 0; cursor: grab; }
+.sticky .sdot { width: 14px; height: 14px; border-radius: 4px; border: 1px solid rgba(0,0,0,.25); cursor: pointer; flex: 0 0 auto; }
+.sticky .stitle { flex: 1; min-width: 0; outline: none; font-size: 12.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: text; }
+.sticky .stitle:empty:before { content: "Untitled"; opacity: .55; }
+.sticky .sbtn { cursor: pointer; font-size: 13px; line-height: 1; flex: 0 0 auto; opacity: .85; }
+.sticky .sbtn:hover { opacity: 1; }
+.sticky .sbody { flex: 1; min-height: 0; overflow-y: auto; padding: 7px 9px; outline: none; font-size: 13px; line-height: 1.4; overflow-wrap: break-word; background: var(--card); color: var(--ink); border-radius: 0 0 8px 8px; }
+.sticky .sbody:empty:before { content: "Type an idea…"; color: var(--muted); opacity: .6; }
+.sticky .sresize { position: absolute; right: 2px; bottom: 2px; width: 14px; height: 14px; cursor: nwse-resize; opacity: .5;
+  background: linear-gradient(135deg, transparent 45%, var(--muted) 45%, var(--muted) 55%, transparent 55%, transparent 68%, var(--muted) 68%, var(--muted) 78%, transparent 78%); }
+.note-colorpop { position: absolute; z-index: 30; display: flex; flex-wrap: wrap; gap: 5px; width: 92px; background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 6px; box-shadow: var(--shadow); }
+.note-colorpop .sw { width: 16px; height: 16px; border-radius: 4px; cursor: pointer; border: 1px solid rgba(0,0,0,.15); }
 .swatch { width: 16px; height: 16px; border-radius: 4px; border: 1px solid rgba(0,0,0,.15); cursor: pointer; }
+.brain-swatches { display: inline-flex; gap: 5px; }
+.brain-search { font: inherit; font-size: 12.5px; border: 1px solid var(--line); border-radius: 7px; padding: 4px 8px; background: var(--card); color: var(--ink); width: 150px; margin-left: auto; }
+.brain-toast-wrap { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 96; display: flex; flex-direction: column-reverse; gap: 8px; align-items: center; }
+.brain-toast { display: flex; align-items: center; gap: 12px; background: var(--ink); color: var(--card); padding: 9px 10px 9px 14px; border-radius: 10px; box-shadow: 0 8px 30px rgba(0,0,0,.3); font-size: 13px; }
+.brain-toast button { border: none; background: var(--accent); color: #fff; border-radius: 7px; padding: 5px 11px; font: inherit; font-weight: 600; cursor: pointer; }
+.modal-body textarea { font: inherit; border: 1px solid var(--line); border-radius: 8px; padding: 7px 9px; width: 100%; background: var(--card); color: var(--ink); resize: vertical; }
+.pp-side .subrow .subtext { flex: 1; min-width: 0; }
+.pp-side .subrow .subtext > span { display: block; cursor: pointer; overflow-wrap: anywhere; }
+.pp-side .subrow .subnote { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px; }
 .sf { display: flex; align-items: center; gap: 8px; padding: 6px 7px; border: 1px solid var(--line); border-radius: 8px; margin-bottom: 6px; background: var(--card); }
 .sf .sfname { flex: 1; font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; cursor: pointer; }
 .sf .sfname:hover { text-decoration: underline; }
@@ -308,6 +320,15 @@ footer .appver { text-decoration: none; opacity: .75; }
 /* focus view */
 .focus-list { display: flex; flex-direction: column; gap: 8px; max-width: 760px; }
 .focus-empty { color: var(--muted); padding: 30px; text-align: center; }
+
+/* update banner + version (only visible on the PWA build) */
+footer .appver { text-decoration: none; opacity: .75; }
+.update-banner { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); z-index: 95; display: none; align-items: center; gap: 12px; background: var(--ink); color: var(--card); padding: 10px 10px 10px 16px; border-radius: 11px; box-shadow: 0 10px 34px rgba(0,0,0,.32); font-size: 13.5px; max-width: 92vw; }
+.update-banner.show { display: flex; }
+.update-banner button { border: none; border-radius: 7px; padding: 6px 12px; font: inherit; font-weight: 600; cursor: pointer; }
+.update-banner .reload { background: var(--accent); color: #fff; }
+.update-banner .later { background: transparent; color: var(--card); text-decoration: underline; font-weight: 400; }
+
 </style>
 </head>
 <body>
@@ -432,6 +453,7 @@ footer .appver { text-decoration: none; opacity: .75; }
     <div class="modal-head"><h2>Edit subtask</h2><button class="iconbtn" data-close>✕</button></div>
     <div class="modal-body">
       <div class="field"><label>Title</label><input type="text" id="subTitle"></div>
+      <div class="field"><label>Notes</label><textarea id="subNotes" rows="2"></textarea></div>
       <div class="field"><label>Due date</label><input type="date" id="subDue"></div>
       <div class="field"><label>Priority</label>
         <select id="subPrio"><option value="0">None</option><option value="3">High</option><option value="2">Medium</option><option value="1">Low</option></select></div>
@@ -526,10 +548,10 @@ footer .appver { text-decoration: none; opacity: .75; }
         </div>
       </div>
       <div class="pp-pane" id="paneBrain">
-        <div class="brain-tools"><button class="btn" id="addSticky">+ Add note</button>
+        <div class="brain-tools"><button class="btn" id="addSticky">+ Add note</button><button class="btn" id="tidyBtn">Tidy</button>
           <span class="tb-lbl">Color</span>
-          <span class="swatch" data-c="#fff3a0" style="background:#fff3a0"></span><span class="swatch" data-c="#c7f0d8" style="background:#c7f0d8"></span><span class="swatch" data-c="#cfe4ff" style="background:#cfe4ff"></span><span class="swatch" data-c="#ffd6d6" style="background:#ffd6d6"></span><span class="swatch" data-c="#e7d6ff" style="background:#e7d6ff"></span>
-          <span class="tb-lbl" style="margin-left:auto">Drag the top bar to move a note</span></div>
+          <span class="brain-swatches" id="brainSwatches"></span>
+          <input type="text" id="brainSearch" class="brain-search" placeholder="Search notes"></div>
         <div class="brain-canvas" id="brainCanvas"></div>
       </div>
     </div>
@@ -547,28 +569,19 @@ footer .appver { text-decoration: none; opacity: .75; }
 <script>
 (function () {
   "use strict";
-
-  var DEFAULT_CATEGORIES = {
-    work:     { label: "Work",     color: "#0ea5e9", icon: "💼" },
-    projects: { label: "Projects", color: "#7c3aed", icon: "🎯" },
-    home:     { label: "Home",     color: "#16a34a", icon: "🏠" },
-    personal: { label: "Personal", color: "#f59e0b", icon: "⭐" },
-    health:   { label: "Health",   color: "#ef4444", icon: "❤️" }
-  };
-  var DEFAULT_LAYOUT = [
-    { id: "g_work", name: "Work", collapsed: false, spheres: ["work","projects"] },
-    { id: "g_life", name: "Life", collapsed: false, spheres: ["home","personal","health"] }
-  ];
+  var CONFIG = {"categories":{"work":{"label":"Work","color":"#0ea5e9","icon":"💼"},"projects":{"label":"Projects","color":"#7c3aed","icon":"🎯"},"home":{"label":"Home","color":"#16a34a","icon":"🏠"},"personal":{"label":"Personal","color":"#f59e0b","icon":"⭐"},"health":{"label":"Health","color":"#ef4444","icon":"❤️"}},"layout":[{"id":"g_work","name":"Work","collapsed":false,"spheres":["work","projects"]},{"id":"g_life","name":"Life","collapsed":false,"spheres":["home","personal","health"]}],"key":"task_dashboard_v1","skey":"task_dashboard_settings_v1","wkey":"task_dashboard_welcomed","pdf":"native","pwa":true,"appVersion":"v4.2","exportName":"dashboard-backup"};
+var DEFAULT_CATEGORIES = CONFIG.categories;
+  var DEFAULT_LAYOUT = CONFIG.layout;
   var DEFAULT_THEME = { mode: "light", density: "comfortable", accent: "#7c3aed", font: "system" };
   var PALETTE = ["#7c3aed","#0ea5e9","#ef4444","#16a34a","#f59e0b","#db2777","#0d9488","#6366f1","#84cc16","#f43f5e","#64748b","#a855f7"];
   var ICONS = ["🎵","🔥","🤝","🏠","💼","📖","🙏","⛪","🎯","📅","💡","❤️","🌟","🎨","📣","🧹","🍽️","🚗","💰","📚","👨‍👩‍👧","✝️","🎤","🛠️"];
   var FONTS = { system:'-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif', serif:'Georgia, "Times New Roman", serif', mono:'"SF Mono", "Courier New", monospace', rounded:'Verdana, "Trebuchet MS", sans-serif' };
   var PRIOS = { 0:{lbl:"",flag:"",color:""}, 1:{lbl:"Low",flag:"▼",color:"#0ea5e9"}, 2:{lbl:"Med",flag:"◆",color:"#d97706"}, 3:{lbl:"High",flag:"▲",color:"#dc2626"} };
-  var STICKY_COLORS = ["#fff3a0","#c7f0d8","#cfe4ff","#ffd6d6","#e7d6ff"];
+  var STICKY_COLORS = ["#fff3a0","#c7f0d8","#cfe4ff","#ffd6d6","#e7d6ff","#ca8a04","#16a34a","#2563eb","#e11d48","#7c3aed"];
 
-  var KEY = "task_dashboard_v1";
-  var SKEY = "task_dashboard_settings_v1";
-  var WKEY = "task_dashboard_welcomed";
+  var KEY = CONFIG.key;
+  var SKEY = CONFIG.skey;
+  var WKEY = CONFIG.wkey;
   var MAX_FILE = 4 * 1024 * 1024;
 
   var tasks = normalizeTasks(load(KEY, []));
@@ -642,6 +655,7 @@ footer .appver { text-decoration: none; opacity: .75; }
   function allCatIds(){ var a=[]; settings.layout.forEach(function(g){ g.spheres.forEach(function(id){ a.push(id); }); }); return a; }
 
   /* dates */
+
   function todayStr(){ var d=new Date(); d.setHours(0,0,0,0); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
   function toISO(d){ return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
   function daysUntil(due){ if(!due) return null; var t=new Date(todayStr()+"T00:00:00"); var d=new Date(due+"T00:00:00"); return Math.round((d-t)/86400000); }
@@ -706,6 +720,7 @@ footer .appver { text-decoration: none; opacity: .75; }
   function passesTagFilter(t){ if(!activeTags.length) return true; for(var i=0;i<activeTags.length;i++){ if((t.tags||[]).indexOf(activeTags[i])>=0) return true; } return false; }
 
   /* ============ RENDER ============ */
+
   function render(){
     applyTheme();
     document.getElementById("today").textContent = new Date().toLocaleDateString(undefined,{weekday:"short",month:"short",day:"numeric"});
@@ -886,6 +901,7 @@ footer .appver { text-decoration: none; opacity: .75; }
   function openSubEditor(t, st, rerender){
     subEditCtx={t:t, st:st, rerender:rerender};
     document.getElementById("subTitle").value=st.title||"";
+    document.getElementById("subNotes").value=st.notes||"";
     document.getElementById("subDue").value=st.due||"";
     document.getElementById("subPrio").value=String(st.priority||0);
     document.getElementById("subRep").value=(st.repeat&&st.repeat.type)?st.repeat.type:"none";
@@ -898,6 +914,7 @@ footer .appver { text-decoration: none; opacity: .75; }
   document.getElementById("subTitle").addEventListener("keydown",function(e){ if(e.key==="Enter"){ e.preventDefault(); document.getElementById("subSave").click(); } });
   document.getElementById("subSave").onclick=function(){ if(!subEditCtx) return; var st=subEditCtx.st;
     var title=document.getElementById("subTitle").value.trim(); if(title) st.title=title;
+    st.notes=document.getElementById("subNotes").value;
     st.due=document.getElementById("subDue").value||"";
     st.priority=parseInt(document.getElementById("subPrio").value,10)||0;
     var type=document.getElementById("subRep").value;
@@ -905,6 +922,7 @@ footer .appver { text-decoration: none; opacity: .75; }
     saveTasks(); closeModal("subModal"); if(subEditCtx.rerender) subEditCtx.rerender(); };
   document.getElementById("subDelete").onclick=function(){ if(!subEditCtx) return; var t=subEditCtx.t, st=subEditCtx.st;
     t.subtasks=t.subtasks.filter(function(u){return u.id!==st.id;}); saveTasks(); closeModal("subModal"); if(subEditCtx.rerender) subEditCtx.rerender(); };
+
   function renderSubs(t){ var wrap=document.createElement("div"); wrap.className="subs";
     var total=t.subtasks.length;
     if(total){ var head=document.createElement("div"); head.className="subs-head";
@@ -922,7 +940,7 @@ footer .appver { text-decoration: none; opacity: .75; }
       var x=document.createElement("button"); x.className="iconbtn x"; x.textContent="✕"; x.onclick=function(){ t.subtasks=t.subtasks.filter(function(u){return u.id!==st.id;}); saveTasks(); render(); };
       row.appendChild(subGrip()); row.appendChild(cb); if(pf) row.appendChild(pf); row.appendChild(span); if(due) row.appendChild(due); row.appendChild(pen); row.appendChild(x); wireSubDnD(row, st, t, render); wrap.appendChild(row); });
     var add=document.createElement("div"); add.className="subadd"; var inp=document.createElement("input"); inp.type="text"; inp.placeholder="+ Add subtask, press Enter";
-    inp.addEventListener("keydown",function(e){ if(e.key==="Enter"){ var v=inp.value.trim(); if(!v) return; t.subtasks.push({id:uid(),title:v,done:false}); saveTasks(); render(); } });
+    inp.addEventListener("keydown",function(e){ if(e.key==="Enter"){ var v=inp.value.trim(); if(!v) return; t.subtasks.push({id:uid(),title:v,done:false,notes:""}); saveTasks(); render(); } });
     add.appendChild(inp); wrap.appendChild(add); return wrap; }
   function renderFilesCard(t){ var wrap=document.createElement("div"); wrap.className="files"; wrap.innerHTML='<div class="flabel">Reference files</div>';
     var holder=document.createElement("div");
@@ -1051,6 +1069,7 @@ footer .appver { text-decoration: none; opacity: .75; }
   }
 
   /* ===== add/edit form ===== */
+
   function buildForm(catId, existing){
     var form=document.createElement("div"); form.className="addform";
     var tmplOpts = settings.templates.map(function(tp){ return '<option value="'+tp.id+'">'+esc(tp.name)+'</option>'; }).join("");
@@ -1108,6 +1127,7 @@ footer .appver { text-decoration: none; opacity: .75; }
     saveSettings(); alert('Saved template "'+name.trim()+'". You can apply it when creating a new project.'); }
 
   /* ===== quick add ===== */
+
   function parseQuickAdd(text){
     var res={ title:"", catId:null, due:"", priority:0, tags:[], repeat:null };
     var tokens=text.split(/\s+/); var titleParts=[];
@@ -1159,6 +1179,7 @@ footer .appver { text-decoration: none; opacity: .75; }
   document.getElementById("quickAdd").addEventListener("keydown",function(e){ if(e.key==="Enter") runQuickAdd(); });
 
   /* ===== category modal ===== */
+
   function openCatModal(id){ catEditId=id; var c=cat(id);
     document.getElementById("catName").value=c.label;
     var sw=document.getElementById("catSwatches"); sw.innerHTML="";
@@ -1242,6 +1263,25 @@ footer .appver { text-decoration: none; opacity: .75; }
       return URL.createObjectURL(new Blob([arr],{type:mime}));
     } catch(e){ return dataURL; }
   }
+  function renderPdf(f, body){
+    if(typeof window.pdfjsLib==="undefined"){ body.innerHTML='<div class="viewer-link">PDF viewer isn’t available here. Use ↗ to open it.</div>'; return; }
+    var bytes; try { var b64=f.data.split(",")[1]; var bin=atob(b64); bytes=new Uint8Array(bin.length); for(var i=0;i<bin.length;i++) bytes[i]=bin.charCodeAt(i); }
+    catch(e){ body.innerHTML='<div class="viewer-link">Couldn’t read this PDF.</div>'; return; }
+    var holder=document.createElement("div"); holder.style.width="100%"; body.appendChild(holder);
+    holder.innerHTML='<div class="viewer-link" style="padding:14px">Rendering PDF…</div>';
+    pdfjsLib.getDocument({data:bytes}).promise.then(function(pdf){
+      holder.innerHTML="";
+      var n=Math.min(pdf.numPages, 50), seq=Promise.resolve();
+      for(var p=1;p<=n;p++){ (function(pageNum){ seq=seq.then(function(){ return pdf.getPage(pageNum).then(function(page){
+        var vp=page.getViewport({scale:1.5}); var canvas=document.createElement("canvas");
+        canvas.width=vp.width; canvas.height=vp.height;
+        canvas.style.width="100%"; canvas.style.height="auto"; canvas.style.display="block"; canvas.style.margin="0 auto 10px"; canvas.style.boxShadow="0 1px 5px rgba(0,0,0,.25)";
+        holder.appendChild(canvas);
+        return page.render({canvasContext:canvas.getContext("2d"), viewport:vp}).promise;
+      }); }); })(p); }
+      return seq;
+    }).catch(function(){ holder.innerHTML='<div class="viewer-link">This PDF couldn’t be rendered here.<br><br>Use ↗ to open it in the real app.</div>'; });
+  }
   function openViewer(f){ var k=fileKind(f); document.getElementById("vName").textContent=f.name;
     var body=document.getElementById("vBody"); body.innerHTML="";
     if(openViewer._blob){ try{ URL.revokeObjectURL(openViewer._blob); }catch(e){} openViewer._blob=null; }
@@ -1250,7 +1290,7 @@ footer .appver { text-decoration: none; opacity: .75; }
     document.getElementById("vOpen").onclick=function(){ var a=document.createElement("a"); a.href=href; a.target="_blank"; a.rel="noopener";
       if(k==="other") a.download=f.name; a.click(); };
     if(k==="image"){ var img=document.createElement("img"); img.src=src; body.appendChild(img); }
-    else if(k==="pdf"){ var fr=document.createElement("iframe"); fr.src=src; body.appendChild(fr); }
+    else if(k==="pdf"){ if(CONFIG.pdf==="pdfjs"){ renderPdf(f, body); } else { var fr=document.createElement("iframe"); fr.src=src; body.appendChild(fr); } }
     else if(k==="text"){ var pre=document.createElement("pre"); pre.textContent=f.text!=null?f.text:"(Preview unavailable — use ↗ to open.)"; body.appendChild(pre); }
     else if(k==="link"){ body.innerHTML='<div class="viewer-link">External link:<br><br><a href="'+esc(f.url)+'" target="_blank" rel="noopener">'+esc(f.url)+'</a></div>'; }
     else body.innerHTML='<div class="viewer-link">No inline preview. Use ↗ to open or download.</div>';
@@ -1262,6 +1302,7 @@ footer .appver { text-decoration: none; opacity: .75; }
 
   /* ===== project page ===== */
   var pp=document.getElementById("projectPage"), notesEditor=document.getElementById("notesEditor"), notesEditor2=document.getElementById("notesEditor2"), notesWrap=document.getElementById("notesWrap"), activeEditor=notesEditor, brainCanvas=document.getElementById("brainCanvas");
+
   function openProject(id){ currentPid=id; var t=getTask(id); if(!t) return; ensureProject(t);
     document.getElementById("ppTitle").value=t.title; document.getElementById("ppDue").value=t.due||"";
     document.getElementById("ppDone").checked=!!t.done;
@@ -1273,7 +1314,7 @@ footer .appver { text-decoration: none; opacity: .75; }
     document.getElementById("notesToolbar").classList.toggle("collapsed", !!settings.notesToolbarCollapsed);
     document.getElementById("tbShow").classList.toggle("show", !!settings.notesToolbarCollapsed);
     setPane("notes"); pp.classList.add("open"); }
-  function closeProject(){ pp.classList.remove("open"); currentPid=null; render(); }
+  function closeProject(){ flushPendingDeletes(); pp.classList.remove("open"); currentPid=null; render(); }
   document.getElementById("ppBack").onclick=closeProject;
   document.getElementById("ppTitle").addEventListener("input",function(){ var t=getTask(currentPid); if(t){ t.title=this.value; saveTasks(); } });
   document.getElementById("ppDue").addEventListener("change",function(){ var t=getTask(currentPid); if(t){ t.due=this.value||""; saveTasks(); } });
@@ -1298,16 +1339,19 @@ footer .appver { text-decoration: none; opacity: .75; }
     t.subtasks.forEach(function(st){ var row=document.createElement("div"); row.className="subrow"+(st.done?" done":"");
       var cb=document.createElement("input"); cb.type="checkbox"; cb.checked=!!st.done; cb.onchange=function(){ completeSubtask(t,st,cb.checked); rr(); };
       var pf=subPrioFlag(st);
-      var span=document.createElement("span"); span.textContent=st.title; span.title="Edit subtask"; span.style.cursor="pointer"; span.onclick=function(){ openSubEditor(t, st, rr); };
+      var textWrap=document.createElement("div"); textWrap.className="subtext";
+      var span=document.createElement("span"); span.textContent=st.title; span.title="Edit subtask"; span.onclick=function(){ openSubEditor(t, st, rr); };
+      textWrap.appendChild(span);
+      if(st.notes && st.notes.trim()){ var nt=document.createElement("div"); nt.className="subnote"; nt.textContent=st.notes; textWrap.appendChild(nt); }
       var due=subDuePill(st);
       var acts=document.createElement("span"); acts.className="subacts";
       var grip=subGrip(); grip.style.opacity="1";
       var pen=document.createElement("span"); pen.className="x"; pen.textContent="✎"; pen.title="Edit"; pen.style.cursor="pointer"; pen.onclick=function(){ openSubEditor(t, st, rr); };
       var x=document.createElement("span"); x.className="x"; x.textContent="✕"; x.onclick=function(){ t.subtasks=t.subtasks.filter(function(u){return u.id!==st.id;}); saveTasks(); rr(); };
       acts.appendChild(grip); acts.appendChild(pen); acts.appendChild(x);
-      row.appendChild(cb); if(pf) row.appendChild(pf); row.appendChild(span); if(due) row.appendChild(due); row.appendChild(acts); wireSubDnD(row, st, t, rr); box.appendChild(row); }); }
+      row.appendChild(cb); if(pf) row.appendChild(pf); row.appendChild(textWrap); if(due) row.appendChild(due); row.appendChild(acts); wireSubDnD(row, st, t, rr); box.appendChild(row); }); }
   document.getElementById("ppSubInput").addEventListener("keydown",function(e){ if(e.key!=="Enter") return; var t=getTask(currentPid); if(!t) return;
-    var v=this.value.trim(); if(!v) return; t.subtasks.push({id:uid(),title:v,done:false}); this.value=""; saveTasks(); renderPPSubs(t); renderProgressPP(t); });
+    var v=this.value.trim(); if(!v) return; t.subtasks.push({id:uid(),title:v,done:false,notes:""}); this.value=""; saveTasks(); renderPPSubs(t); renderProgressPP(t); });
   function renderPPFiles(t){ var box=document.getElementById("ppFiles"); box.innerHTML="";
     if(!t.files.length){ box.innerHTML='<div class="empty" style="text-align:left">No files yet</div>'; return; }
     t.files.forEach(function(f){ var k=fileKind(f); var row=document.createElement("div"); row.className="sf";
@@ -1372,24 +1416,105 @@ footer .appver { text-decoration: none; opacity: .75; }
   document.getElementById("tbCollapse").onclick=function(){ setToolbarCollapsed(true); };
   document.getElementById("tbShow").onclick=function(){ setToolbarCollapsed(false); };
 
-  function renderBrain(t){ brainCanvas.innerHTML=""; t.brainstorm.forEach(function(n){ brainCanvas.appendChild(makeSticky(t,n)); }); }
-  function makeSticky(t,n){ var el=document.createElement("div"); el.className="sticky"; el.style.left=(n.x||20)+"px"; el.style.top=(n.y||20)+"px"; el.style.background=n.color||brainColor;
-    var head=document.createElement("div"); head.className="shead"; var x=document.createElement("span"); x.className="sx"; x.textContent="✕";
-    x.onclick=function(){ t.brainstorm=t.brainstorm.filter(function(u){return u.id!==n.id;}); saveTasks(); renderBrain(t); }; head.appendChild(x);
-    var txt=document.createElement("div"); txt.className="stext"; txt.contentEditable="true"; txt.textContent=n.text||"";
-    txt.addEventListener("input",function(){ n.text=txt.textContent; saveTasks(); });
-    el.appendChild(head); el.appendChild(txt); head.addEventListener("mousedown",function(ev){ startDrag(ev,el,n,t); }); return el; }
+  // ---- brainstorm ----
+  var pendingDeleteIds={}, pendingList=[], brainToastWrap=null, brainQuery="";
+  function noteTextColor(hex){ var c=(hex||"#ffffff").replace("#",""); if(c.length===3) c=c.split("").map(function(x){return x+x;}).join("");
+    var r=parseInt(c.substr(0,2),16), g=parseInt(c.substr(2,2),16), b=parseInt(c.substr(4,2),16);
+    return (0.299*r+0.587*g+0.114*b) > 150 ? "#1f2430" : "#ffffff"; }
+  function ensureNote(n){ if(n.title==null) n.title=""; if(!n.w) n.w=190; if(!n.h) n.h=90; if(!n.color) n.color=brainColor; }
+  function applyNoteColor(el,n){ el.style.border="1px solid "+n.color;
+    var head=el.querySelector(".shead"); head.style.background=n.color; head.style.color=noteTextColor(n.color);
+    var dot=el.querySelector(".sdot"); if(dot) dot.style.background=n.color; }
+
+  function renderBrain(t){ brainCanvas.innerHTML=""; t.brainstorm.forEach(function(n){ if(pendingDeleteIds[n.id]) return; ensureNote(n); brainCanvas.appendChild(makeSticky(t,n)); }); applyBrainSearch(); }
+
+  function makeSticky(t,n){ ensureNote(n);
+    var el=document.createElement("div"); el.className="sticky"; el.dataset.id=n.id;
+    el.style.left=(n.x||20)+"px"; el.style.top=(n.y||20)+"px"; el.style.width=(n.w||190)+"px"; el.style.height=(n.h||90)+"px";
+    var head=document.createElement("div"); head.className="shead";
+    var dot=document.createElement("span"); dot.className="sdot"; dot.title="Change color"; dot.onclick=function(ev){ ev.stopPropagation(); openNoteColorPop(el,n); };
+    var title=document.createElement("div"); title.className="stitle"; title.contentEditable="true"; title.textContent=n.title||"";
+    title.addEventListener("input",function(){ n.title=title.textContent; saveTasks(); });
+    title.addEventListener("mousedown",function(ev){ ev.stopPropagation(); });
+    var prom=document.createElement("span"); prom.className="sbtn"; prom.textContent="→"; prom.title="Promote to subtask"; prom.onclick=function(ev){ ev.stopPropagation(); promoteNote(t,n); };
+    var del=document.createElement("span"); del.className="sbtn"; del.textContent="✕"; del.title="Delete"; del.onclick=function(ev){ ev.stopPropagation(); softDeleteNote(t,n); };
+    head.appendChild(dot); head.appendChild(title); head.appendChild(prom); head.appendChild(del);
+    var body=document.createElement("div"); body.className="sbody"; body.contentEditable="true"; body.textContent=n.text||"";
+    body.addEventListener("input",function(){ n.text=body.textContent; saveTasks(); });
+    var rz=document.createElement("div"); rz.className="sresize"; rz.title="Drag to resize"; rz.addEventListener("mousedown",function(ev){ startResize(ev,el,n); });
+    el.appendChild(head); el.appendChild(body); el.appendChild(rz);
+    applyNoteColor(el,n);
+    head.addEventListener("mousedown",function(ev){ if(ev.target.closest(".stitle,.sbtn,.sdot")) return; startDrag(ev,el,n,t); });
+    return el;
+  }
   function startDrag(ev,el,n,t){ ev.preventDefault(); var rect=el.getBoundingClientRect(); var cRect=brainCanvas.getBoundingClientRect();
     var offX=ev.clientX-rect.left, offY=ev.clientY-rect.top;
     function move(e){ var x=Math.max(0,e.clientX-cRect.left-offX+brainCanvas.scrollLeft); var y=Math.max(0,e.clientY-cRect.top-offY+brainCanvas.scrollTop);
       el.style.left=x+"px"; el.style.top=y+"px"; n.x=x; n.y=y; }
     function up(){ document.removeEventListener("mousemove",move); document.removeEventListener("mouseup",up); saveTasks(); }
     document.addEventListener("mousemove",move); document.addEventListener("mouseup",up); }
+  function startResize(ev,el,n){ ev.preventDefault(); ev.stopPropagation();
+    var startX=ev.clientX, startY=ev.clientY, startW=n.w||190, startH=n.h||90;
+    function move(e){ var w=Math.max(140,startW+(e.clientX-startX)), h=Math.max(70,startH+(e.clientY-startY));
+      n.w=w; n.h=h; el.style.width=w+"px"; el.style.height=h+"px"; }
+    function up(){ document.removeEventListener("mousemove",move); document.removeEventListener("mouseup",up); saveTasks(); }
+    document.addEventListener("mousemove",move); document.addEventListener("mouseup",up); }
+
+  function openNoteColorPop(el,n){ closeNoteColorPop();
+    var pop=document.createElement("div"); pop.className="note-colorpop"; pop.id="noteColorPop";
+    STICKY_COLORS.forEach(function(c){ var s=document.createElement("span"); s.className="sw"; s.style.background=c;
+      s.onclick=function(ev){ ev.stopPropagation(); n.color=c; applyNoteColor(el,n); saveTasks(); closeNoteColorPop(); }; pop.appendChild(s); });
+    pop.style.left=(parseInt(el.style.left,10)||0)+"px"; pop.style.top=((parseInt(el.style.top,10)||0)+30)+"px";
+    brainCanvas.appendChild(pop);
+    setTimeout(function(){ document.addEventListener("mousedown",closeNoteColorPopOnce,true); },0);
+  }
+  function closeNoteColorPop(){ var p=document.getElementById("noteColorPop"); if(p) p.remove(); document.removeEventListener("mousedown",closeNoteColorPopOnce,true); }
+  function closeNoteColorPopOnce(e){ if(e.target.closest(".note-colorpop")) return; closeNoteColorPop(); }
+
+  function promoteNote(t,n){ var title=(n.title&&n.title.trim()) ? n.title.trim() : (n.text||"").trim().slice(0,40);
+    t.subtasks.push({id:uid(),title:title,done:false,notes:n.text||""});
+    t.brainstorm=t.brainstorm.filter(function(u){return u.id!==n.id;});
+    saveTasks(); renderBrain(t); renderPPSubs(t); renderProgressPP(t); }
+
+  function getToastWrap(){ if(!brainToastWrap){ brainToastWrap=document.createElement("div"); brainToastWrap.className="brain-toast-wrap"; document.body.appendChild(brainToastWrap); } return brainToastWrap; }
+  function softDeleteNote(t,n){ if(pendingDeleteIds[n.id]) return; var idx=t.brainstorm.indexOf(n); pendingDeleteIds[n.id]=true;
+    var elx=brainCanvas.querySelector('.sticky[data-id="'+n.id+'"]'); if(elx) elx.remove();
+    var toast=document.createElement("div"); toast.className="brain-toast";
+    var msg=document.createElement("span"); msg.textContent="Note deleted"; var undo=document.createElement("button"); undo.textContent="Undo";
+    toast.appendChild(msg); toast.appendChild(undo); getToastWrap().appendChild(toast);
+    var p={t:t,n:n,idx:idx,toast:toast,timer:null}; pendingList.push(p);
+    p.timer=setTimeout(function(){ finalizeDelete(p); },5000);
+    undo.onclick=function(){ clearTimeout(p.timer); delete pendingDeleteIds[n.id]; toast.remove(); pendingList=pendingList.filter(function(x){return x!==p;}); renderBrain(t); };
+  }
+  function finalizeDelete(p){ clearTimeout(p.timer); if(p.toast&&p.toast.parentNode) p.toast.remove(); delete pendingDeleteIds[p.n.id];
+    p.t.brainstorm=p.t.brainstorm.filter(function(u){return u.id!==p.n.id;}); pendingList=pendingList.filter(function(x){return x!==p;}); saveTasks(); }
+  function flushPendingDeletes(){ pendingList.slice().forEach(finalizeDelete); }
+
+  function tidyBrain(){ var t=getTask(currentPid); if(!t) return;
+    var notes=t.brainstorm.filter(function(n){ return !pendingDeleteIds[n.id]; }); if(!notes.length) return;
+    notes.forEach(ensureNote);
+    var hs=notes.map(function(n){return n.h||90;}).sort(function(a,b){return a-b;}); var median=hs[Math.floor(hs.length/2)];
+    notes.forEach(function(n){ n.h=median; });
+    var gap=16, pad=16, maxW=Math.max(200, brainCanvas.clientWidth-pad), x=pad, y=pad;
+    notes.forEach(function(n){ var w=n.w||190; if(x!==pad && x+w>maxW){ x=pad; y+=median+gap; } n.x=x; n.y=y; x+=w+gap; });
+    saveTasks(); renderBrain(t);
+  }
+
+  function applyBrainSearch(){ var q=brainQuery.trim().toLowerCase(); var t=getTask(currentPid); if(!t) return;
+    brainCanvas.querySelectorAll(".sticky").forEach(function(el){ var id=el.dataset.id;
+      var n=t.brainstorm.filter(function(u){return u.id===id;})[0];
+      if(!q||!n){ el.classList.remove("dim"); return; }
+      var hit=((n.title||"")+" "+(n.text||"")).toLowerCase().indexOf(q)>=0; el.classList.toggle("dim", !hit); });
+  }
+
   document.getElementById("addSticky").onclick=function(){ var t=getTask(currentPid); if(!t) return;
-    var n={id:uid(),x:20+brainCanvas.scrollLeft+Math.random()*40,y:20+brainCanvas.scrollTop+Math.random()*40,text:"",color:brainColor};
+    var n={id:uid(),x:20+brainCanvas.scrollLeft+Math.random()*40,y:20+brainCanvas.scrollTop+Math.random()*40,text:"",title:"",color:brainColor,w:190,h:90};
     t.brainstorm.push(n); saveTasks(); brainCanvas.appendChild(makeSticky(t,n)); };
-  document.querySelectorAll(".brain-tools .swatch").forEach(function(sw){ sw.onclick=function(){ brainColor=sw.dataset.c;
-    document.querySelectorAll(".brain-tools .swatch").forEach(function(s){ s.style.outline=""; }); sw.style.outline="2px solid var(--ink)"; }; });
+  document.getElementById("tidyBtn").onclick=tidyBrain;
+  document.getElementById("brainSearch").addEventListener("input",function(){ brainQuery=this.value; applyBrainSearch(); });
+  (function initBrainSwatches(){ var box=document.getElementById("brainSwatches"); if(!box) return;
+    STICKY_COLORS.forEach(function(c,i){ var s=document.createElement("span"); s.className="swatch"; s.dataset.c=c; s.style.background=c; if(i===0) s.style.outline="2px solid var(--ink)";
+      s.onclick=function(){ brainColor=c; box.querySelectorAll(".swatch").forEach(function(x){x.style.outline="";}); s.style.outline="2px solid var(--ink)"; }; box.appendChild(s); }); })();
 
   document.addEventListener("keydown",function(e){ if(e.key==="Escape"){
     var openOv=document.querySelector(".modal-ov.open"); if(openOv){ openOv.classList.remove("open"); return; }
@@ -1401,7 +1526,7 @@ footer .appver { text-decoration: none; opacity: .75; }
   document.querySelectorAll("#viewSwitch button").forEach(function(b){ b.onclick=function(){ viewMode=b.dataset.view; render(); }; });
   document.getElementById("exportBtn").onclick=function(){ var payload={tasks:tasks,settings:settings};
     var blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"}); var a=document.createElement("a");
-    a.href=URL.createObjectURL(blob); a.download="dashboard-backup-"+todayStr()+".json"; a.click(); };
+    a.href=URL.createObjectURL(blob); a.download=CONFIG.exportName+"-"+todayStr()+".json"; a.click(); };
   document.getElementById("importBtn").onclick=function(){ document.getElementById("importFile").click(); };
   document.getElementById("importFile").onchange=function(e){ var file=e.target.files[0]; if(!file) return; var r=new FileReader();
     r.onload=function(){ try{ var data=JSON.parse(r.result);
@@ -1409,51 +1534,36 @@ footer .appver { text-decoration: none; opacity: .75; }
       tasks=normalizeTasks(tasks); settings=normalizeSettings(settings); saveTasks(); saveSettings(); render();
     } catch(err){ alert("Could not read that backup file."); } }; r.readAsText(file); };
 
-  var APP_VERSION = "v4.1";  // shown in the footer; bump alongside sw.js on each update
-  var av = document.getElementById("appVersion"); if (av) av.textContent = APP_VERSION;
-
-  document.getElementById("welcomeGo").onclick=function(){ try{ localStorage.setItem(WKEY,"1"); }catch(e){} closeModal("welcomeModal"); };
-  var seen=false; try{ seen=!!localStorage.getItem(WKEY); }catch(e){}
-  if(!seen) openModal("welcomeModal");
-
-  var deferredPrompt=null; var installBtn=document.getElementById("installBtn");
-  window.addEventListener("beforeinstallprompt",function(e){ e.preventDefault(); deferredPrompt=e; if(installBtn) installBtn.style.display=""; });
-  if(installBtn) installBtn.onclick=function(){ if(!deferredPrompt) return; deferredPrompt.prompt();
-    deferredPrompt.userChoice.then(function(){ deferredPrompt=null; installBtn.style.display="none"; }); };
-  window.addEventListener("appinstalled",function(){ if(installBtn) installBtn.style.display="none"; });
-
   applyTheme();
   render();
-})();
 
-/* Register the service worker and show a "new version available" banner when an update
-   has been downloaded. Enables offline use once hosted over http/https. */
-(function () {
-  if (!("serviceWorker" in navigator) || location.protocol.indexOf("http") !== 0) return;
-  function showUpdateBanner(reg) {
-    var b = document.getElementById("updateBanner"); if (!b) return;
-    b.classList.add("show");
-    document.getElementById("updateReload").onclick = function () {
-      if (reg && reg.waiting) reg.waiting.postMessage({ type: "SKIP_WAITING" });
-      else location.reload();
-    };
-    document.getElementById("updateLater").onclick = function () { b.classList.remove("show"); };
-  }
-  var refreshing = false;
-  navigator.serviceWorker.addEventListener("controllerchange", function () {
-    if (refreshing) return; refreshing = true; location.reload();
-  });
-  window.addEventListener("load", function () {
-    navigator.serviceWorker.register("sw.js").then(function (reg) {
-      if (reg.waiting && navigator.serviceWorker.controller) showUpdateBanner(reg);
-      reg.addEventListener("updatefound", function () {
-        var nw = reg.installing; if (!nw) return;
-        nw.addEventListener("statechange", function () {
-          if (nw.state === "installed" && navigator.serviceWorker.controller) showUpdateBanner(reg);
-        });
+
+  if(CONFIG.pwa){
+    var av=document.getElementById("appVersion"); if(av) av.textContent=CONFIG.appVersion;
+    var wg=document.getElementById("welcomeGo"); if(wg) wg.onclick=function(){ try{localStorage.setItem(WKEY,"1");}catch(e){} closeModal("welcomeModal"); };
+    var seen=false; try{ seen=!!localStorage.getItem(WKEY); }catch(e){}
+    if(!seen) openModal("welcomeModal");
+    var deferredPrompt=null, installBtn=document.getElementById("installBtn");
+    window.addEventListener("beforeinstallprompt",function(e){ e.preventDefault(); deferredPrompt=e; if(installBtn) installBtn.style.display=""; });
+    if(installBtn) installBtn.onclick=function(){ if(!deferredPrompt) return; deferredPrompt.prompt(); deferredPrompt.userChoice.then(function(){ deferredPrompt=null; installBtn.style.display="none"; }); };
+    window.addEventListener("appinstalled",function(){ if(installBtn) installBtn.style.display="none"; });
+    if("serviceWorker" in navigator && location.protocol.indexOf("http")===0){
+      var refreshing=false;
+      navigator.serviceWorker.addEventListener("controllerchange",function(){ if(refreshing) return; refreshing=true; location.reload(); });
+      window.addEventListener("load",function(){
+        navigator.serviceWorker.register("sw.js").then(function(reg){
+          function showBanner(){ var b=document.getElementById("updateBanner"); if(!b) return; b.classList.add("show");
+            document.getElementById("updateReload").onclick=function(){ if(reg&&reg.waiting) reg.waiting.postMessage({type:"SKIP_WAITING"}); else location.reload(); };
+            document.getElementById("updateLater").onclick=function(){ b.classList.remove("show"); }; }
+          if(reg.waiting && navigator.serviceWorker.controller) showBanner();
+          reg.addEventListener("updatefound",function(){ var nw=reg.installing; if(!nw) return;
+            nw.addEventListener("statechange",function(){ if(nw.state==="installed" && navigator.serviceWorker.controller) showBanner(); }); });
+        }).catch(function(){});
       });
-    }).catch(function () {});
-  });
+    }
+  }
+
+
 })();
 </script>
 </body>
