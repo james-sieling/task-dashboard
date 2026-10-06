@@ -133,11 +133,14 @@ html[data-theme="dark"] .pill.overdue { background: #3b1a1a; } html[data-theme="
 .prog .lbl { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
 
 .subs { margin-top: 8px; border-top: 1px dashed var(--line); padding-top: 7px; display: flex; flex-direction: column; gap: 4px; }
-.sub { display: flex; align-items: center; gap: 7px; font-size: 13px; }
-.sub input.cb { width: 14px; height: 14px; margin: 0; }
-.sub .st { flex: 1; word-wrap: break-word; min-width: 0; }
+.sub { position: relative; display: flex; align-items: flex-start; gap: 7px; font-size: 13px; }
+.sub input.cb { width: 14px; height: 14px; margin: 1px 0 0; }
+.sub .st { word-wrap: break-word; overflow-wrap: anywhere; min-width: 0; cursor: pointer; }
 .sub.done .st { text-decoration: line-through; color: var(--muted); }
-.sub .x { opacity: 0; } .sub:hover .x { opacity: 1; }
+.sub-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.sub-main .pill.sub-due { align-self: flex-start; }
+.sub-acts { position: absolute; right: 0; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 4px; padding: 2px 2px 2px 12px; background: linear-gradient(90deg, transparent, var(--card) 35%); opacity: 0; }
+.sub:hover .sub-acts { opacity: 1; }
 .subadd { display: flex; gap: 5px; margin-top: 3px; }
 .subadd input { font: inherit; font-size: 12.5px; flex: 1; border: 1px solid var(--line); border-radius: 6px; padding: 4px 7px; background: var(--card); color: var(--ink); }
 
@@ -569,7 +572,7 @@ footer .appver { text-decoration: none; opacity: .75; }
 <script>
 (function () {
   "use strict";
-  var CONFIG = {"categories":{"work":{"label":"Work","color":"#0ea5e9","icon":"💼"},"projects":{"label":"Projects","color":"#7c3aed","icon":"🎯"},"home":{"label":"Home","color":"#16a34a","icon":"🏠"},"personal":{"label":"Personal","color":"#f59e0b","icon":"⭐"},"health":{"label":"Health","color":"#ef4444","icon":"❤️"}},"layout":[{"id":"g_work","name":"Work","collapsed":false,"spheres":["work","projects"]},{"id":"g_life","name":"Life","collapsed":false,"spheres":["home","personal","health"]}],"key":"task_dashboard_v1","skey":"task_dashboard_settings_v1","wkey":"task_dashboard_welcomed","pdf":"native","pwa":true,"appVersion":"v4.2","exportName":"dashboard-backup"};
+  var CONFIG = {"categories":{"work":{"label":"Work","color":"#0ea5e9","icon":"💼"},"projects":{"label":"Projects","color":"#7c3aed","icon":"🎯"},"home":{"label":"Home","color":"#16a34a","icon":"🏠"},"personal":{"label":"Personal","color":"#f59e0b","icon":"⭐"},"health":{"label":"Health","color":"#ef4444","icon":"❤️"}},"layout":[{"id":"g_work","name":"Work","collapsed":false,"spheres":["work","projects"]},{"id":"g_life","name":"Life","collapsed":false,"spheres":["home","personal","health"]}],"key":"task_dashboard_v1","skey":"task_dashboard_settings_v1","wkey":"task_dashboard_welcomed","pdf":"native","pwa":true,"appVersion":"v4.3","exportName":"dashboard-backup"};
 var DEFAULT_CATEGORIES = CONFIG.categories;
   var DEFAULT_LAYOUT = CONFIG.layout;
   var DEFAULT_THEME = { mode: "light", density: "comfortable", accent: "#7c3aed", font: "system" };
@@ -934,11 +937,16 @@ var DEFAULT_CATEGORIES = CONFIG.categories;
     t.subtasks.forEach(function(st){ var row=document.createElement("div"); row.className="sub"+(st.done?" done":"");
       var cb=document.createElement("input"); cb.type="checkbox"; cb.className="cb"; cb.checked=!!st.done; cb.onchange=function(){ completeSubtask(t,st,cb.checked); render(); };
       var pf=subPrioFlag(st);
-      var span=document.createElement("span"); span.className="st"; span.textContent=st.title; span.title="Edit subtask"; span.style.cursor="pointer"; span.onclick=function(){ openSubEditor(t, st, render); };
-      var due=subDuePill(st);
-      var pen=document.createElement("button"); pen.className="iconbtn x"; pen.textContent="✎"; pen.title="Edit subtask"; pen.onclick=function(){ openSubEditor(t, st, render); };
-      var x=document.createElement("button"); x.className="iconbtn x"; x.textContent="✕"; x.onclick=function(){ t.subtasks=t.subtasks.filter(function(u){return u.id!==st.id;}); saveTasks(); render(); };
-      row.appendChild(subGrip()); row.appendChild(cb); if(pf) row.appendChild(pf); row.appendChild(span); if(due) row.appendChild(due); row.appendChild(pen); row.appendChild(x); wireSubDnD(row, st, t, render); wrap.appendChild(row); });
+      var main=document.createElement("div"); main.className="sub-main";
+      var span=document.createElement("span"); span.className="st"; span.textContent=st.title; span.title="Edit subtask"; span.onclick=function(){ openSubEditor(t, st, render); };
+      main.appendChild(span);
+      var due=subDuePill(st); if(due) main.appendChild(due);
+      var acts=document.createElement("span"); acts.className="sub-acts";
+      var grip=subGrip(); grip.style.opacity="1";
+      var pen=document.createElement("button"); pen.className="iconbtn"; pen.textContent="✎"; pen.title="Edit subtask"; pen.onclick=function(){ openSubEditor(t, st, render); };
+      var x=document.createElement("button"); x.className="iconbtn"; x.textContent="✕"; x.title="Delete"; x.onclick=function(){ t.subtasks=t.subtasks.filter(function(u){return u.id!==st.id;}); saveTasks(); render(); };
+      acts.appendChild(grip); acts.appendChild(pen); acts.appendChild(x);
+      row.appendChild(cb); if(pf) row.appendChild(pf); row.appendChild(main); row.appendChild(acts); wireSubDnD(row, st, t, render); wrap.appendChild(row); });
     var add=document.createElement("div"); add.className="subadd"; var inp=document.createElement("input"); inp.type="text"; inp.placeholder="+ Add subtask, press Enter";
     inp.addEventListener("keydown",function(e){ if(e.key==="Enter"){ var v=inp.value.trim(); if(!v) return; t.subtasks.push({id:uid(),title:v,done:false,notes:""}); saveTasks(); render(); } });
     add.appendChild(inp); wrap.appendChild(add); return wrap; }
